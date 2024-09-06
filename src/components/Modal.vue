@@ -1,10 +1,10 @@
 <template>
-  <div class="modal-wrapper" @click="handleClose">
-    <div class="modal-container" @click="$event.stopPropagation()">
+  <div class="modal-wrapper" @mousedown="handleClose">
+    <div class="modal-container" @mousedown="$event.stopPropagation()">
       <div class="map-wrapper">
         <div v-if="!isMapLoading" class="loading">지도 로딩 중...</div>
-        <div class="pos"></div>
-        <button class="save" @click="handleSavePos">확인</button>
+        <div v-if="isMapLoading" class="pos"></div>
+        <button v-if="isMapLoading" class="save" @click="handleSavePos">확인</button>
       </div>
     </div>
   </div>
@@ -89,16 +89,25 @@ const handleSavePos = () => {
       width: 100%;
       height: 100%;
 
+      .loading {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
       .pos {
         position: absolute;
         top: calc(50% - 8px);
         right: calc(50% - 8px);
-        width: 16px;
-        height: 16px;
-        background-color: white;
+        width: 8px;
+        height: 8px;
+        background-color: red;
         border-radius: 50%;
         z-index: 99;
-        outline: 8px solid red;
+        outline: 2px solid red;
+        box-shadow: inset 0 0 2px 2px white;
       }
 
       .save {
@@ -116,6 +125,10 @@ const handleSavePos = () => {
         border: none;
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
         cursor: pointer;
+      }
+
+      .hide {
+        opacity: 0;
       }
     }
   }
